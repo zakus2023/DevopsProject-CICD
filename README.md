@@ -1,67 +1,44 @@
-# Devops-Project.
+# Anon - An eCommerce Website
 
-![Tools](https://github.com/pandacloud1/DevopsProject1/assets/134182273/b553e105-136d-4ce4-93ec-540809cdc6ee)
+![GitHub repo size](https://img.shields.io/github/repo-size/codewithsadee/anon-ecommerce-website)
+![GitHub stars](https://img.shields.io/github/stars/codewithsadee/anon-ecommerce-website?style=social)
+![GitHub forks](https://img.shields.io/github/forks/codewithsadee/anon-ecommerce-website?style=social)
+[![Twitter Follow](https://img.shields.io/twitter/follow/codewithsadee_?style=social)](https://twitter.com/intent/follow?screen_name=codewithsadee_)
+[![YouTube Video Views](https://img.shields.io/youtube/views/3l8Lob4ysI0?style=social)](https://youtu.be/3l8Lob4ysI0)
 
-This repository contains the following components:
+Anon is a fully responsive ecommerce website, maximum compatiblities in all mobile devices, built using HTML, CSS, and JavaScript.
 
-1.  Simple Java Code
-2.  Dockerfile
-3.  Kubernetes manifests (`deployment.yaml` & `service.yaml`)
-4.  Jenkinsfile (CI & CD)
-5.  Terraform code
+## Demo
 
-## Algorithm
+![Anon Desktop Demo](./website-demo-image/desktop.png "Desktop Demo")
+![Anon Mobile Demo](./website-demo-image/mobile.png "Mobile Demo")
 
-#### 1.  Create two EC2 instances: 'Master-Server' & 'Node-Server' using Terraform
+## Prerequisites
 
-    a. 'Master-Server' will have Java, Jenkins, Maven, Docker, Ansible, & Trivy packages
-    b. 'Node-Server' will have Docker, Kubeadm & Kubernetes packages
+Before you begin, ensure you have met the following requirements:
 
-#### 2.  Establish passwordless connection between 'Master-Server' & 'Node-Server'
-     <Commands to run in 'Node-Server'>
-     sudo su -
-     passwd ec2-user                         # (set password)
-     vi /etc/ssh/sshd_config                 # (Allow 'PermitRootLogin yes' & allow 'PasswordAuthentication yes')
-     service sshd restart
+* [Git](https://git-scm.com/downloads "Download Git") must be installed on your operating system.
 
-     <Commands to run in 'Master-Server'>
-     ssh-keygen                              # (this will generate ssh key, press enter when prompted)
-     ssh-copy-id ec2-user@<Node_Private_IP>  # (enter 'yes' when prompted & enter the Node's ec2-user password when prompted)
+## Installing Anon
 
-#### 3.  Access Jenkins portal & add credentials in Jenkins portal as below:
-     (Manage Jenkins --> Credentials --> System --> Global credentials)
+To install **Anon**, follow these steps:
 
-    a. Dockerhub credentials - username & password (Use 'secret text' & save them separately)
-    b. K8s server username with private key (Use 'SSH Username with private key')
-    c. Add Github username & token (Generate Github token & save as 'secret key' in Jenkins server)
-        (Github: Github settings --> Developer settings --> Personal Token classic --> Generate)
-    d. Dockerhub token (optional) (Generate token & save as 'secret key')
-        (Dockerhub: Account --> Settings --> Security --> Generate token & copy it)
+Linux and macOS:
 
-#### 4.  Add required plugins in Jenkins portal
-     (Manage Jenkins --> Plugins --> Available plugins --> 'ssh agent' --> Install)
-     (This plugin is required to generate ssh agent syntax using pipeline syntax generator)
+```bash
+sudo git clone https://github.com/codewithsadee/anon-ecommerce-website.git
+```
 
-#### 5.  Access Jenkins portal & paste the 'CI-pipeline' code
-     Run the pipeline
+Windows:
 
-#### 6.  Now create another 'CD-pipeline'
-     a. Enter the 'Pipeline name', 'Project Name' & 'Node-Server' Private IP under the environment variables section
-     b. Run the pipeline
-     c. Access the content from the browser using <Node_Server_Public_IP>:<NodePort_No>
+```bash
+git clone https://github.com/codewithsadee/anon-ecommerce-website.git
+```
 
-#### 7.  Automation
-     a. Automate the CD pipeline after CI pipeline is built successfully
-        (CD-pipeline --> Configure --> Build Triggers --> Projects to watch (CI-pipeline) --> 
-        Trigger only if build is stable --> Save)
-     b. Automate CI pipeline if any changes are pushed to Github
-        (Webhook will be created in Github & trigger will be created in Jenkins)
-        Jenkins --> Configure --> Build triggers --> 'Github hook trigger for GitSCM polling' --> Save
-        Jenkins --> <Your_Account> --> Configure --> API Tokens --> <Jenkins-API-Token>
-        Github --> <Your-Repo> --> Settings --> Webhooks --> "<Jenkins-url>:8080/github-webhook/"; -->
-        Content type: json;     Secret: <Jenkins-API-Token> --> Add Webhook
-        (Try making any changes in your code & the pipeline should automatically trigger)
+## Contact
 
-#### 8.  Deletion
-     a. Run the below command in Terraform to destroy the entire infrastructure
-        terraform destroy --auto-approve
+If you want to contact me you can reach me at [Twitter](https://www.twitter.com/codewithsadee).
+
+## License
+
+This project is **free to use** and does not contains any license.

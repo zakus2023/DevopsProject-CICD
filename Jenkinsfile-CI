@@ -19,15 +19,10 @@ pipeline {
             }
         }
 
-        stage ('2. Git Checkout') {
-            // use pipeline syntax generator to generate below step
-            // 'Pipeline syntax' --> Steps 'Smaple step' --> git (enter url & branch & generate)
+        stage ('2. Clone the repo') {
+            // I am just cloning the repo this way because am using a public github repo in this project
             steps {
-                dir ("DevopsProject1"){
-                  script {
-                    git branch: 'main', url: 'https://github.com/zakus2023/DevopsProject-CICD.git' 
-                  }
-                }
+                  sh "git clone https://github.com/zakus2023/DevopsProject-CICD.git"
             }
         }   
         
@@ -97,8 +92,8 @@ pipeline {
             // Login to Dockerhub & Push the image to Dockerhub
             steps{
                 script { 
-                  withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'docker_user', passwordVariable: 'docker_pass')]) {
-                    sh "docker login -u '${docker_user}' -p '${docker_pass}'"
+                  withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'docker_password', usernameVariable: 'docker_user')]) {
+                    sh "docker login -u '${docker_user}' -p '${docker_password}'"
                     def JOB = env.JOB_NAME.toLowerCase() // Convert Jenkins Job name to lower-case
                     sh "docker push ${DOCKER_USERNAME}/${JOB}:v${BUILD_NUMBER}"
                     sh "docker push ${DOCKER_USERNAME}/${JOB}:latest"
